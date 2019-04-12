@@ -47,5 +47,31 @@ describe('routeHandlers', () => {
 
             expect(response.status).toBe(422);
         })
+
+        it('sends back correct type', async () => {
+            const body = {title: 'Hanna', genre: 'arcade', releaseYear: 1990}
+            const response = await request(server).post('/games').send(body);
+
+            expect(typeof response.body).toBe('object');
+        })
+
+        it('should return the id of the game created', async () => {
+            const body = {
+               title: 'Clash Royale',
+               genre: 'PG-6',
+               releaseYear: '2010',
+            };
+   
+            const response = await request(server).post('/games').send(body);
+            expect(response.body).toEqual([1]);
+         });
+
+         it('should return status code error of 422,', async () => {
+            const body = {title: 'ptris'}
+            const response = await request(server).post('/games').send(body);
+
+            expect(response.status).toBe(422);
+        })
+        
     });
 });
