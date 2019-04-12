@@ -27,4 +27,25 @@ describe('routeHandlers', () => {
             expect(typeof response.body).toBe('object');
         })
     });
+    describe('/post games', () => {
+
+        it('responds with status 201', async () => {
+            const body = {
+                title: 'Pacman', // required
+                genre: 'Arcade', // required
+                releaseYear: 1980 // not required
+              }
+            const response = await request(server).post('/games').send(body);
+
+            expect(response.status).toBe(201);
+            expect(response.body.length).toBe(1);
+
+        })
+        it('responds with status 422', async () => {
+            const body = {}
+            const response = await request(server).post('/games').send(body);
+
+            expect(response.status).toBe(422);
+        })
+    });
 });
